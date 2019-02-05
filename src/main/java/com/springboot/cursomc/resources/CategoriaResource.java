@@ -1,7 +1,5 @@
 package com.springboot.cursomc.resources;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +21,9 @@ public class CategoriaResource {
 	@GetMapping(value="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> find(@PathVariable("id") Integer id) {		
 		
-		Optional<Categoria> categoria = categoriaService.buscar(id);
+		Categoria categoria = categoriaService.buscar(id);		
+		return ResponseEntity.ok(categoria);
 		
-		if(categoria.isPresent())
-			return ResponseEntity.ok(categoria.get());
-		
-		return ResponseEntity.notFound().build();
 	}
 	
 	/*private List<Categoria> getListaCategoria(){
