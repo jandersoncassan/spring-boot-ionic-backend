@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.cursomc.domain.Categoria;
-import com.springboot.cursomc.services.CategoriaService;
+import com.springboot.cursomc.domain.Cliente;
+import com.springboot.cursomc.services.ClienteService;
 
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResource {
+@RequestMapping(value="/clientes")
+public class ClienteResource {
 	
 	@Autowired
-	private CategoriaService categoriaService;
+	private ClienteService clienteService;
 
 	@GetMapping(value="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> find(@PathVariable("id") Integer id) {		
 		
-		Categoria categoria = categoriaService.buscar(id);		
+		Cliente categoria = clienteService.buscar(id);		
 		return ResponseEntity.ok(categoria);
 		
 	}
