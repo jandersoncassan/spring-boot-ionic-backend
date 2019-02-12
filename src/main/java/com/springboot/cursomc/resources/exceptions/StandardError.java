@@ -1,6 +1,9 @@
 package com.springboot.cursomc.resources.exceptions;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StandardError implements Serializable{
 
@@ -8,13 +11,14 @@ public class StandardError implements Serializable{
 
 	private Integer status;
 	private String message;
-	private Long timeStamp;
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss", locale="pt-Br")
+	private Date timeStamp;
 	
 	public StandardError(Integer status, String message, Long timeStamp) {
 		super();
 		this.status = status;
 		this.message = message;
-		this.timeStamp = timeStamp;
+		this.timeStamp = new Date(timeStamp);
 	}
 	
 	public Integer getStatus() {
@@ -29,10 +33,10 @@ public class StandardError implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Long getTimeStamp() {
+	public Date getTimeStamp() {
 		return timeStamp;
 	}
-	public void setTimeStamp(Long timeStamp) {
+	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 	
