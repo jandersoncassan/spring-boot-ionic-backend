@@ -5,6 +5,7 @@ import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,12 @@ public class CategoriaResource {
 	public ResponseEntity<Void> update(@PathVariable("id") Integer id, @RequestBody Categoria obj) {
 		obj.setId(id); //SÓ PARA GARANTIR QUE ESTAREMOS ATUALIZANDO O ID QUE FOI PASSADO NO PATH
 		categoriaService.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+
+	@DeleteMapping(value="/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Void> update(@PathVariable("id") Integer id) {
+		categoriaService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
