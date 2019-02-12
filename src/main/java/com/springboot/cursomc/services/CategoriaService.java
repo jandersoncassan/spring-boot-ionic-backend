@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.springboot.cursomc.domain.Categoria;
@@ -25,12 +28,6 @@ public class CategoriaService {
 		return categorias.stream().map(categoria -> popularCategoria(categoria)).collect(Collectors.toList());
 	}
 
-	private CategoriaDTO popularCategoria(Categoria categoria) {
-		CategoriaDTO categoriaDTO = new CategoriaDTO();
-		categoriaDTO.setId(categoria.getId());
-		categoriaDTO.setNome(categoria.getNome());
-		return categoriaDTO;
-	}
 
 	public Categoria find(Integer id){
 		Optional<Categoria> categoria = catergoriaRepository.findById(id);
@@ -56,6 +53,20 @@ public class CategoriaService {
 		}catch(Exception ex) {
 			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos", ex);
 		}
+	}
+	
+	public Page<CategoriaDTO> findPage(Integer page, Integer linePerPage, String direction,  String orderBy){
+		PageRequest pageRequest = PageRequest.of(page, linePerPage, Direction.valueOf(direction), orderBy);
+		Page<Categoria> categorias = catergoriaRepository.findAll(pageRequest);
+		return categorias.map(categoria -> popularCategoria(categoria));
+	}
+
+	
+	private CategoriaDTO popularCategoria(Categoria categoria) {
+		CategoriaDTO categoriaDTO = new CategoriaDTO();
+		categoriaDTO.setId(categoria.getId());
+		categoriaDTO.setNome(categoria.getNome());
+		return categoriaDTO;
 	}
 
 }
