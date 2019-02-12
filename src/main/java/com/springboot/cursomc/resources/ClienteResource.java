@@ -19,10 +19,10 @@ public class ClienteResource {
 	private ClienteService clienteService;
 
 	@GetMapping(value="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> find(@PathVariable("id") Integer id) {		
+	public ResponseEntity<Cliente> find(@PathVariable("id") Integer id) {		
 		
-		Cliente categoria = clienteService.buscar(id);		
-		return ResponseEntity.ok(categoria);
+		Cliente cliente = clienteService.buscar(id);		
+		return ResponseEntity.ok(cliente);
 		
 	}
 }

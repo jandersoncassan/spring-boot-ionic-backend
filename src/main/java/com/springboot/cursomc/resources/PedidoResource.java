@@ -19,10 +19,10 @@ public class PedidoResource {
 	private PedidoService pedidoService;
 
 	@GetMapping(value="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> find(@PathVariable("id") Integer id) {		
+	public ResponseEntity<Pedido> find(@PathVariable("id") Integer id) {		
 		
-		Pedido categoria = pedidoService.buscar(id);		
-		return ResponseEntity.ok(categoria);
+		Pedido pedido = pedidoService.buscar(id);		
+		return ResponseEntity.ok(pedido);
 		
 	}
 }
