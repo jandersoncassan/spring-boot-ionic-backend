@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.cursomc.domain.Cidade;
 import com.springboot.cursomc.domain.Cliente;
@@ -36,17 +37,17 @@ public class ClienteService {
 		return categorias.stream().map(categoria -> popularCliente(categoria)).collect(Collectors.toList());
 	}
 
-
 	public Cliente find(Integer id){
 		Optional<Cliente> categoria = clienteRepository.findById(id);
 		return categoria.orElseThrow(() -> new ObjectNotFoundException(
 				"Cliente não encontrada ! Id :" + id + ", Tipo  : " + Cliente.class.getName()));
 	}
 	
+	@Transactional
 	public Cliente insert(Cliente obj) {
 		obj.setId(null); // SÓ PARA GARANTIR QUE ESTAMOS PASSANDO UM CARA QUE NÃO EXISTE
 		obj =  clienteRepository.save(obj);
-		enderecoRepository.saveAll(obj.getEnderecos());
+		enderecoRepository.saveAll(null);
 		return obj;
 	}
 
