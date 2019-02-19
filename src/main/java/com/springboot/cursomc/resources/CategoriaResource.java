@@ -3,6 +3,8 @@ package com.springboot.cursomc.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -36,14 +38,16 @@ public class CategoriaResource {
 	}
 
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) {
+		Categoria obj = categoriaService.fromDTO(objDTO);
 		Categoria categoria = categoriaService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	@PutMapping(value="/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Void> update(@PathVariable("id") Integer id, @RequestBody Categoria obj) {
+	public ResponseEntity<Void> update(@PathVariable("id") Integer id, @Valid @RequestBody CategoriaDTO objDTO) {
+		Categoria obj = categoriaService.fromDTO(objDTO);
 		obj.setId(id); //SÓ PARA GARANTIR QUE ESTAREMOS ATUALIZANDO O ID QUE FOI PASSADO NO PATH
 		categoriaService.update(obj);
 		return ResponseEntity.noContent().build();
