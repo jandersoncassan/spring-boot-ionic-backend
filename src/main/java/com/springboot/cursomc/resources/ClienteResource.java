@@ -55,7 +55,7 @@ public class ClienteResource {
 	}
 
 	@DeleteMapping(value="/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Void> update(@PathVariable("id") Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
 		clienteService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
