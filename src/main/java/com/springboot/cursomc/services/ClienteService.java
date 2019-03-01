@@ -47,7 +47,7 @@ public class ClienteService {
 	public Cliente insert(Cliente obj) {
 		obj.setId(null); // SÓ PARA GARANTIR QUE ESTAMOS PASSANDO UM CARA QUE NÃO EXISTE
 		obj =  clienteRepository.save(obj);
-		enderecoRepository.saveAll(null);
+		enderecoRepository.saveAll(obj.getEnderecos());
 		return obj;
 	}
 
